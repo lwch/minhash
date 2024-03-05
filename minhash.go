@@ -10,8 +10,8 @@ type MinHash struct {
 	dict       *dict
 	hashSize   int
 	m          sync.Mutex
-	vocab      map[shingle]struct{}
-	cacheVocab []shingle
+	vocab      map[Shingle]struct{}
+	cacheVocab []Shingle
 	hashFuncs  [][]int
 }
 
@@ -21,7 +21,7 @@ func New(hashSize int) *MinHash {
 	return &MinHash{
 		dict:     newDict(),
 		hashSize: hashSize,
-		vocab:    make(map[shingle]struct{}),
+		vocab:    make(map[Shingle]struct{}),
 	}
 }
 
@@ -36,7 +36,7 @@ func (h *MinHash) Add(str string) ShingleSet {
 			prev = h.dict.Add(ch)
 			continue
 		}
-		var sh shingle
+		var sh Shingle
 		next := h.dict.Add(ch)
 		sh[0] = prev
 		sh[1] = next
@@ -61,13 +61,13 @@ func (h *MinHash) Hash(ss ShingleSet) Hash {
 	return ret
 }
 
-func (h *MinHash) vocabs() []shingle {
+func (h *MinHash) vocabs() []Shingle {
 	if h.cacheVocab != nil {
 		return h.cacheVocab
 	}
 	h.m.Lock()
 	defer h.m.Unlock()
-	ret := make([]shingle, len(h.vocab))
+	ret := make([]Shingle, len(h.vocab))
 	i := 0
 	for sh := range h.vocab {
 		ret[i] = sh
@@ -80,7 +80,7 @@ func (h *MinHash) vocabs() []shingle {
 	return ret
 }
 
-func (h *MinHash) hash(ss ShingleSet, hf []int, vocabs []shingle) int {
+func (h *MinHash) hash(ss ShingleSet, hf []int, vocabs []Shingle) int {
 	for _, fn := range hf {
 		s := vocabs[fn]
 		if _, ok := ss[s]; ok {

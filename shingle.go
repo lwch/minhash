@@ -1,8 +1,8 @@
 package minhash
 
-type shingle [2]int
+type Shingle [2]int
 
-func (s shingle) String(dict *dict) string {
+func (s Shingle) String(dict *dict) string {
 	var str string
 	for i := 0; i < 2; i++ {
 		r, ok := dict.Rune(s[i])
@@ -15,7 +15,7 @@ func (s shingle) String(dict *dict) string {
 	return str
 }
 
-type ShingleSet map[shingle]int
+type ShingleSet map[Shingle]int
 
 func (ss ShingleSet) Intersection(other ShingleSet) ShingleSet {
 	ret := make(ShingleSet)
