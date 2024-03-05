@@ -15,10 +15,10 @@ func (s shingle) String(dict *dict) string {
 	return str
 }
 
-type shingleSet map[shingle]int
+type ShingleSet map[shingle]int
 
-func (ss shingleSet) Intersection(other shingleSet) shingleSet {
-	ret := make(shingleSet)
+func (ss ShingleSet) Intersection(other ShingleSet) ShingleSet {
+	ret := make(ShingleSet)
 	for k, v := range ss {
 		if v2, ok := other[k]; ok {
 			ret[k] = min(v, v2)
@@ -27,8 +27,8 @@ func (ss shingleSet) Intersection(other shingleSet) shingleSet {
 	return ret
 }
 
-func (ss shingleSet) Union(other shingleSet) shingleSet {
-	ret := make(shingleSet)
+func (ss ShingleSet) Union(other ShingleSet) ShingleSet {
+	ret := make(ShingleSet)
 	for k, v := range ss {
 		ret[k] = v
 	}

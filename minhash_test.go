@@ -23,6 +23,6 @@ func TestMinHash(t *testing.T) {
 	fmt.Println(jaccard(sa, sc), Jaccard(ha, hc))
 }
 
-func jaccard(a, b shingleSet) float64 {
+func jaccard(a, b ShingleSet) float64 {
 	return float64(len(a.Intersection(b))) / float64(len(a.Union(b)))
 }

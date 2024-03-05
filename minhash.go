@@ -25,11 +25,11 @@ func New(hashSize int) *MinHash {
 	}
 }
 
-func (h *MinHash) Add(str string) shingleSet {
+func (h *MinHash) Add(str string) ShingleSet {
 	if h.hashFuncs != nil {
 		panic("hash functions already initialized")
 	}
-	ret := make(shingleSet)
+	ret := make(ShingleSet)
 	prev := -1
 	for i, ch := range str {
 		if i == 0 {
@@ -49,7 +49,7 @@ func (h *MinHash) Add(str string) shingleSet {
 	return ret
 }
 
-func (h *MinHash) Hash(ss shingleSet) Hash {
+func (h *MinHash) Hash(ss ShingleSet) Hash {
 	if h.hashFuncs == nil {
 		h.buildHashFuncs()
 	}
@@ -80,7 +80,7 @@ func (h *MinHash) vocabs() []shingle {
 	return ret
 }
 
-func (h *MinHash) hash(ss shingleSet, hf []int, vocabs []shingle) int {
+func (h *MinHash) hash(ss ShingleSet, hf []int, vocabs []shingle) int {
 	for _, fn := range hf {
 		s := vocabs[fn]
 		if _, ok := ss[s]; ok {
